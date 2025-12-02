@@ -3,18 +3,20 @@ package guru.springframework.springaifunctions.services;
 
 import guru.springframework.springaifunctions.model.Answer;
 import guru.springframework.springaifunctions.model.Question;
-import lombok.RequiredArgsConstructor;
-import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by jt, Spring Framework Guru.
+ * Modified by Pierrot, 02-12-2025.
  */
-@RequiredArgsConstructor
 @Service
 public class OpenAIServiceImpl implements OpenAIService {
 
-    final ChatModel chatModel;
+    private final ChatClient chatClient;
+
+    public OpenAIServiceImpl(ChatClient.Builder chatClientBuilder) {
+        this.chatClient = chatClientBuilder.build();
+    }
 
     @Override
     public Answer getAnswer(Question question) {
