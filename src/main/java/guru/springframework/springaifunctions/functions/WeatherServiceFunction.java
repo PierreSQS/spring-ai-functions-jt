@@ -2,13 +2,15 @@ package guru.springframework.springaifunctions.functions;
 
 import guru.springframework.springaifunctions.model.WeatherRequest;
 import guru.springframework.springaifunctions.model.WeatherResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.RestClient;
 
 import java.util.function.Function;
 
 /**
- * Created by jt, Spring Framework Guru.
+ * Modified by Pierrot, 02-12-2025.
  */
+@Slf4j
 public class WeatherServiceFunction implements Function<WeatherRequest, WeatherResponse> {
 
     public static final String WEATHER_URL = "https://api.api-ninjas.com/v1/weather";
@@ -26,20 +28,14 @@ public class WeatherServiceFunction implements Function<WeatherRequest, WeatherR
                 .defaultHeaders(httpHeaders -> {
                     httpHeaders.set("X-Api-Key", apiNinjasKey);
                     httpHeaders.set("Accept", "application/json");
-                    httpHeaders.set("Content-Type", "application/json");
                 }).build();
 
         return restClient.get().uri(uriBuilder -> {
-            System.out.println("Building URI for weather request: " + weatherRequest);
+            log.info("### Building URI for weather request: {} ###", weatherRequest);
 
-            uriBuilder.queryParam("city", weatherRequest.location());
+            uriBuilder.queryParam("lon", weatherRequest.lon());
+            uriBuilder.queryParam("lat", weatherRequest.lat());
 
-            if (weatherRequest.state() != null && !weatherRequest.state().isBlank()) {
-                uriBuilder.queryParam("state", weatherRequest.state());
-            }
-            if (weatherRequest.country() != null && !weatherRequest.country().isBlank()) {
-                uriBuilder.queryParam("country", weatherRequest.country());
-            }
             return uriBuilder.build();
         }).retrieve().body(WeatherResponse.class);
     }
