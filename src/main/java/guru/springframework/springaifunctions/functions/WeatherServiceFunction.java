@@ -28,14 +28,13 @@ public class WeatherServiceFunction implements Function<WeatherRequest, WeatherR
                 .defaultHeaders(httpHeaders -> {
                     httpHeaders.set("X-Api-Key", apiNinjasKey);
                     httpHeaders.set("Accept", "application/json");
-                    httpHeaders.set("Content-Type", "application/json");
                 }).build();
 
         return restClient.get().uri(uriBuilder -> {
             log.info("### Building URI for weather request: {} ###", weatherRequest);
 
-            uriBuilder.queryParam("longitude", weatherRequest.lon());
-            uriBuilder.queryParam("latitude", weatherRequest.lat());
+            uriBuilder.queryParam("lon", weatherRequest.lon());
+            uriBuilder.queryParam("lat", weatherRequest.lat());
 
             return uriBuilder.build();
         }).retrieve().body(WeatherResponse.class);
