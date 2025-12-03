@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>guru.springframework</groupId>
-    <artifactId>spring-ai-functions</artifactId>
+    <artifactId>spring-ai-functions-jt</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-ai-functions</name>
+    <name>spring-ai-functions-jt</name>
     <description>spring-ai-functions</description>
     <properties>
         <java.version>21</java.version>
