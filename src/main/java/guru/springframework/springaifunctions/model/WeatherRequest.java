@@ -14,7 +14,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
  * <a href="https://api-ninjas.com/api/weather">ninja documentation</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonClassDescription("Ninja's Weather API request")
-public record WeatherRequest(@JsonProperty(required = true, value = "lon") @JsonPropertyDescription("Longitude of the city") String lon,
-                             @JsonProperty(required = true, value = "lat") @JsonPropertyDescription("Latitude of the city") String lat){
+@JsonClassDescription("Weather API request")
+public record WeatherRequest(@JsonProperty(required = true, value = "longitude")
+                             @JsonPropertyDescription("Longitude of the city") String lon,
+                             @JsonProperty(required = true, value = "latitude")
+                             @JsonPropertyDescription("Latitude of the city") String lat,
+
+                             @JsonProperty(required = false)
+                             @JsonPropertyDescription("Optional State for US Cities Only. Use full name of State") String state,
+                             @JsonProperty(required = false)
+                             @JsonPropertyDescription("Optional Country name") String country){
 }
