@@ -1,10 +1,19 @@
 spring:
   application:
     name: spring-ai-functions
-#Pass API key as environment variable, e.g. -DOPENAI_API_KEY=your-api-key
+
+  # enable colorized log output
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  #Pass API key as environment variable, e.g. -DOPENAI_API_KEY=your-api-key
   ai:
     openai:
       api-key: ${OPENAI_API_KEY}
       chat:
         options:
-          model: gpt-4
+          model: gpt-5
+sfg:
+  aiapp:
+    apiNinjasKey: ${API_NINJAS_KEY}
