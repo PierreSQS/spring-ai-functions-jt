@@ -14,8 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Created by jt, Spring Framework Guru.
- * Refactored by Claude Sonnet 4.6, on 20-04-2026.
+ * Modified by Pierrot, on 20-04-2026.
  * <p>
  * OpenAI service implementation that uses Spring AI's {@link ChatClient} to answer
  * questions. {@link WeatherServiceFunction} is registered as a tool callback so the
@@ -28,14 +27,13 @@ public class OpenAIServiceImpl implements OpenAIService {
 
     // Kept here so WeatherServiceFunction needs no Spring annotations
     // since it's also needed there
-    private final String apiNinjasKey;
+    @Value("${sfg.aiapp.apiNinjasKey}")
+    private String apiNinjasKey;
 
     // initializes the chatClient through the ChatClent.Builder
     // and injects the API key from application properties
-    public OpenAIServiceImpl(ChatClient.Builder chatClientBuilder,
-                             @Value("${sfg.aiapp.apiNinjasKey}") String apiNinjasKey) {
+    public OpenAIServiceImpl(ChatClient.Builder chatClientBuilder) {
         this.chatClient = chatClientBuilder.build();
-        this.apiNinjasKey = apiNinjasKey;
     }
 
     @Override
@@ -45,18 +43,17 @@ public class OpenAIServiceImpl implements OpenAIService {
 
         // Register the function as a named tool callback; the model decides when to call it
         var weatherToolCallback = FunctionToolCallback.builder("weatherFunction", weatherFunction)
-                .description("Get current weather for a given longitude and latitude")
+                .description("Get current weather in location with a iven longitude and latitude")
                 .inputType(WeatherRequest.class)  // tells Spring AI how to deserialize the model's JSON arguments
                 .build();
 
-        // tools() makes the callback available to the model for this single request
-        String response = chatClient.prompt()
+        // toolCallbacks() makes the callback available to the model for this single request
+        return chatClient.prompt()
                 .advisors(List.of(new SimpleLoggerAdvisor())) // logs the conversation to the console
                 .user(question.question())
                 .toolCallbacks(weatherToolCallback)
                 .call()
-                .content();
+                .entity(Answer.class); // deserialize the model's final response into our Answer class
 
-        return new Answer(response);
     }
 }
