@@ -17,3 +17,8 @@ spring:
 sfg:
   aiapp:
     apiNinjasKey: ${API_NINJAS_KEY}
+
+# logs the advisor on the server console
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor: DEBUG

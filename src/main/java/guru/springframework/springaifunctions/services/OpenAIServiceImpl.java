@@ -6,9 +6,12 @@ import guru.springframework.springaifunctions.model.Answer;
 import guru.springframework.springaifunctions.model.Question;
 import guru.springframework.springaifunctions.model.WeatherRequest;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.tool.function.FunctionToolCallback;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by jt, Spring Framework Guru.
@@ -48,6 +51,7 @@ public class OpenAIServiceImpl implements OpenAIService {
 
         // tools() makes the callback available to the model for this single request
         String response = chatClient.prompt()
+                .advisors(List.of(new SimpleLoggerAdvisor())) // logs the conversation to the console
                 .user(question.question())
                 .toolCallbacks(weatherToolCallback)
                 .call()
