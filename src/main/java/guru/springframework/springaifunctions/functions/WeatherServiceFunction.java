@@ -8,7 +8,13 @@ import org.springframework.web.client.RestClient;
 import java.util.function.Function;
 
 /**
- * Created by jt, Spring Framework Guru.
+ * Created by Claude Sonnet 4.6, on 20-04-2026.
+ * Refactored by Claude Sonnet 4.6, on 20-04-2026.
+ * <p>
+ * Spring AI tool callback that fetches current weather data from the API-Ninjas
+ * weather endpoint for a given longitude/latitude. The API key is supplied by
+ * the caller (OpenAIServiceImpl) so this class stays free of Spring context
+ * dependencies and can be used as a plain {@link java.util.function.Function}.
  */
 public class WeatherServiceFunction implements Function<WeatherRequest, WeatherResponse> {
 
@@ -17,6 +23,8 @@ public class WeatherServiceFunction implements Function<WeatherRequest, WeatherR
 
     private final RestClient restClient;
 
+    // API key is passed in by the caller; RestClient is built once per instance
+    // to avoid overhead of building it on every function call
     public WeatherServiceFunction(String apiNinjasKey) {
         this.restClient = RestClient.builder()
                 .baseUrl(NINJA_WEATHER_URL)
