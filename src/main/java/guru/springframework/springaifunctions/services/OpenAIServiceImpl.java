@@ -49,7 +49,7 @@ public class OpenAIServiceImpl implements OpenAIService {
         // tools() makes the callback available to the model for this single request
         String response = chatClient.prompt()
                 .user(question.question())
-                .tools(weatherToolCallback)
+                .toolCallbacks(weatherToolCallback)
                 .call()
                 .content();
 
