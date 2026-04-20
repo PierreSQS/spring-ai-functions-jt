@@ -14,10 +14,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 public record WeatherRequest(
         @JsonProperty("lon")
         @JsonPropertyDescription("Longitude of the city")
-        double lon,
+        Double lon,
 
         @JsonProperty("lat")
         @JsonPropertyDescription("Latitude of the city")
-        double lat
+        Double lat
 ) {
 }
