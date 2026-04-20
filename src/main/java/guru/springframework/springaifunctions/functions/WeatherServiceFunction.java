@@ -35,12 +35,6 @@ public class WeatherServiceFunction implements Function<WeatherRequest, WeatherR
 
     @Override
     public WeatherResponse apply(WeatherRequest request) {
-        if (request.lon() == null) {
-            throw new IllegalArgumentException("lon (longitude) is required and must not be null");
-        }
-        if (request.lat() == null) {
-            throw new IllegalArgumentException("lat (latitude) is required and must not be null");
-        }
 
         return restClient.get()
                 .uri(uriBuilder -> uriBuilder
