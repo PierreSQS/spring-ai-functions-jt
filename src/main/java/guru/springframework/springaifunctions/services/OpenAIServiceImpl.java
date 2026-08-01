@@ -43,7 +43,7 @@ public class OpenAIServiceImpl implements OpenAIService {
 
         // Register the function as a named tool callback; the model decides when to call it
         var weatherToolCallback = FunctionToolCallback.builder("weatherFunction", weatherFunction)
-                .description("Get current weather in location with a iven longitude and latitude")
+                .description("Get current weather in location with a given longitude and latitude")
                 .inputType(WeatherRequest.class)  // tells Spring AI how to deserialize the model's JSON arguments
                 .build();
 
