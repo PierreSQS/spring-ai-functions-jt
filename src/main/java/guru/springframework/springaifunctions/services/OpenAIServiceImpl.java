@@ -47,11 +47,11 @@ public class OpenAIServiceImpl implements OpenAIService {
                 .inputType(WeatherRequest.class)  // tells Spring AI how to deserialize the model's JSON arguments
                 .build();
 
-        // toolCallbacks() makes the callback available to the model for this single request
+        // toolc() makes the callback available to the model for this single request
         return chatClient.prompt()
                 .advisors(List.of(new SimpleLoggerAdvisor())) // logs the conversation to the console
                 .user(question.question())
-                .toolCallbacks(weatherToolCallback)
+                .tools(weatherToolCallback)
                 .call()
                 .entity(Answer.class); // deserialize the model's final response into our Answer class
 
